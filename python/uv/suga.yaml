@@ -1,0 +1,22 @@
+name: python-fastapi-uv
+description: A FastAPI web service template using the Suga framework for cloud resource access.
+targets:
+  - suga/aws@1
+services:
+  processor:
+    dev:
+      script: uv run uvicorn main:app --host 0.0.0.0 --port $PORT
+    container:
+      docker:
+        dockerfile: Dockerfile
+        context: .
+entrypoints:
+  ingress:
+    routes:
+      /:
+        name: processor
+buckets:
+  image:
+    access:
+      processor:
+        - all

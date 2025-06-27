@@ -1,0 +1,22 @@
+name: python-django-pip
+description: A Django web service template using the Suga framework for cloud resource access.
+targets:
+  - suga/aws@1
+services:
+  processor:
+    container:
+      docker:
+        dockerfile: Dockerfile
+        context: .
+    dev:
+      script: python manage.py runserver 0.0.0.0:$PORT
+buckets:
+  image:
+    access:
+      processor:
+        - all
+entrypoints:
+  ingress:
+    routes:
+      /:
+        name: processor

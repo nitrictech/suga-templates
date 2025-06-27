@@ -1,0 +1,22 @@
+name: typescript-express
+targets:
+  - suga/aws@1
+description: An example suga service
+services:
+  app:
+    container:
+      docker:
+        dockerfile: Dockerfile
+        context: .
+    dev:
+      script: npm run dev
+buckets:
+  image:
+    access:
+      app:
+        - all
+entrypoints:
+  ingress:
+    routes:
+      /:
+        name: app

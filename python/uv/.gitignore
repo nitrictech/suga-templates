@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+.coverage
+.DS_Store
+.nitric
+.suga
+
+# Environment variables
+.env
+.env.local
+
+# Distribution / packaging
+dist/
+build/

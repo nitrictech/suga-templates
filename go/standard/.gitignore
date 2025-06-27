@@ -1,0 +1,19 @@
+.nitric/
+.suga
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go build cache
+.cache/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log

@@ -1,0 +1,17 @@
+[project]
+name = "suga-python-example"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "grpcio>=1.74.0",
+  "grpcio-tools>=1.74.0",
+  "suga-client==0.0.1rc3",
+]
+
+[build-system]
+requires = ["setuptools>=40.8.0", "wheel", "pip"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,25 @@
+targets:
+  - suga/aws@1
+name: go-standard
+description: A Go web service template using the Suga framework for cloud resource access.
+services:
+  app:
+    env:
+      TEST: test
+    container:
+      docker:
+        dockerfile: Dockerfile
+        context: .
+    dev:
+      script: go run main.go
+buckets:
+  files:
+    access:
+      app:
+        - read
+        - write
+entrypoints:
+  ingress:
+    routes:
+      /:
+        name: app
