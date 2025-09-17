@@ -9,7 +9,7 @@ dependencies = [
   "uvicorn",
   "grpcio>=1.74.0",
   "grpcio-tools>=1.74.0",
-  "suga-client==0.0.1rc3",
+  "suga-client==0.0.9",
 ]
 
 [build-system]
