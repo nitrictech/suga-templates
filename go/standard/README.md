@@ -5,7 +5,7 @@ A Go web service template using the Suga framework for cloud resource access.
 ## Prerequisites
 
 - Go 1.20+
-- [Suga CLI](https://docs.addsuga.com/cli/installation)
+- [Suga CLI](https://docs.addsuga.com/installation)
 
 ## Setup
 
