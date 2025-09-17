@@ -10,13 +10,20 @@ updates:
     allow:
       - dependency-name: "@nitric/suga-client"
 
-  # Python templates
+  # Python Django template
   - package-ecosystem: "pip"
-    directories:
-      - "/python/*"
+    directory: "/python/django"
     schedule:
       interval: "daily"
     versioning-strategy: increase
+    allow:
+      - dependency-name: "suga-client"
+
+  # Python uv template
+  - package-ecosystem: "uv"
+    directory: "/python/uv"
+    schedule:
+      interval: "daily"
     allow:
       - dependency-name: "suga-client"
 
