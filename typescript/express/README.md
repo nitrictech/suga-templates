@@ -5,15 +5,15 @@ A TypeScript (Express) web service template using the Suga framework for cloud r
 ## Prerequisites
 
 - Node.js 18+
-- npm
-- [Suga CLI](https://docs.addsuga.com/cli/installation)
+- Any package manager (e.g., npm, yarn, bun)
+- [Suga CLI](https://docs.addsuga.com/installation)
 
 ## Setup
 
 ### Build the Suga SDK
 
 ```bash
-make generate
+npm run generate
 ```
 
 ### Install dependencies
@@ -21,6 +21,10 @@ make generate
 ```bash
 npm install
 ```
+
+**Using alternative package managers:**
+- For yarn/pnpm: Delete `package-lock.json` first, then run `yarn install` or `pnpm install`
+- For bun: Run `bun install` (auto-migrates from npm). You may want to delete `package-lock.json` afterwards to avoid confusion
 
 ## Running the Application (Development)
 

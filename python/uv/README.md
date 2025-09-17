@@ -6,7 +6,7 @@ A FastAPI web service template using the Suga framework for cloud resource acces
 
 - Python 3.10+
 - [uv](https://github.com/astral-sh/uv)
-- [Suga CLI](https://docs.addsuga.com/cli/installation)
+- [Suga CLI](https://docs.addsuga.com/installation)
 
 ## Setup
 
