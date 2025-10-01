@@ -36,8 +36,16 @@ script: go run main.go
 
 ## Example Usage
 
-Write and read a greeting:
+Write an object:
 
 ```bash
-curl http://localhost:4000/hello/world
+curl -X POST http://localhost:4000/write/test-object.txt \
+  -H "Content-Type: text/plain" \
+  --data "Hello from curl!"
+```
+
+Read an object:
+
+```bash
+curl http://localhost:4000/read/test-object.txt
 ```
