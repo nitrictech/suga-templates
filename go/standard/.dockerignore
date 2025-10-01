@@ -26,6 +26,11 @@ README.md
 # Go build cache
 .cache/
 
+# IDE
+.DS_Store
+.vscode/
+.idea/
+
 # Test binaries
 *.test
 
