@@ -1,12 +1,26 @@
 package main
 
 import (
+	"encoding/json"
 	"example/suga"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
 )
+
+type ErrorResponse struct {
+	Detail string `json:"detail"`
+}
+
+func writeJSONError(w http.ResponseWriter, err error) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusInternalServerError)
+	if encErr := json.NewEncoder(w).Encode(ErrorResponse{Detail: err.Error()}); encErr != nil {
+		log.Printf("Failed to encode error response: %v", encErr)
+	}
+}
 
 func main() {
 	router := http.NewServeMux()
@@ -17,14 +31,39 @@ func main() {
 	}
 
 	// setup a basic http server
-	router.HandleFunc("GET /hello/{name}", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("GET /read/{name}", func(w http.ResponseWriter, r *http.Request) {
 		name := r.PathValue("name")
 
-		// Use the suga client to access cloud resources
-		app.Files.Write("example.txt", []byte("Hello, "+name+"!"))
+		contents, err := app.Image.Read(name)
+		if err != nil {
+			writeJSONError(w, err)
+			return
+		}
 
+		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Hello, " + name + "!"))
+		w.Write(contents)
+	})
+
+	router.HandleFunc("POST /write/{name}", func(w http.ResponseWriter, r *http.Request) {
+		name := r.PathValue("name")
+
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			writeJSONError(w, err)
+			return
+		}
+		defer r.Body.Close()
+
+		err = app.Image.Write(name, body)
+		if err != nil {
+			writeJSONError(w, err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "text/plain")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "File '%s' written to bucket.", name)
 	})
 
 	port := os.Getenv("PORT")
