@@ -9,7 +9,7 @@
     "generate": "suga generate --ts --ts-out ./suga/client"
   },
   "dependencies": {
-    "@nitric/suga-client": "0.0.9",
+    "@nitric/suga-client": "0.1.12",
     "body-parser": "^1.20.2",
     "express": "^4.21.2"
   },
