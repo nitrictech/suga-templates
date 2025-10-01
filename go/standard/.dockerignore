@@ -1,0 +1,33 @@
+# Suga specific
+.suga/
+terraform/
+
+# Git
+.git/
+.gitignore
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# Documentation
+README.md
+
+# Go binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go build cache
+.cache/
+
+# Test binaries
+*.test
+
+# Go workspace file
+go.work
