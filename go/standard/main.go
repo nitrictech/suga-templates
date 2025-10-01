@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"example/suga"
 	"fmt"
 	"io"
@@ -8,6 +9,18 @@ import (
 	"net/http"
 	"os"
 )
+
+type ErrorResponse struct {
+	Detail string `json:"detail"`
+}
+
+func writeJSONError(w http.ResponseWriter, err error) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusInternalServerError)
+	if encErr := json.NewEncoder(w).Encode(ErrorResponse{Detail: err.Error()}); encErr != nil {
+		log.Printf("Failed to encode error response: %v", encErr)
+	}
+}
 
 func main() {
 	router := http.NewServeMux()
@@ -23,7 +36,7 @@ func main() {
 
 		contents, err := app.Image.Read(name)
 		if err != nil {
-			http.Error(w, fmt.Sprintf(`{"detail": "%s"}`, err.Error()), http.StatusInternalServerError)
+			writeJSONError(w, err)
 			return
 		}
 
@@ -37,20 +50,20 @@ func main() {
 
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
-			http.Error(w, fmt.Sprintf(`{"detail": "%s"}`, err.Error()), http.StatusInternalServerError)
+			writeJSONError(w, err)
 			return
 		}
 		defer r.Body.Close()
 
 		err = app.Image.Write(name, body)
 		if err != nil {
-			http.Error(w, fmt.Sprintf(`{"detail": "%s"}`, err.Error()), http.StatusInternalServerError)
+			writeJSONError(w, err)
 			return
 		}
 
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(fmt.Sprintf("File '%s' written to bucket.", name)))
+		fmt.Fprintf(w, "File '%s' written to bucket.", name)
 	})
 
 	port := os.Getenv("PORT")
