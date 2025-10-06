@@ -1,33 +1,26 @@
-# Base image for both build and final stages
 FROM python:3.12-slim-bookworm AS base
 
-# Builder stage for installing dependencies
+# Build stage - has ALL dependencies
 FROM base AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements file first (better cache layer)
+# Install dependencies first (for better caching)
 COPY requirements.txt /app/
 
-# Install dependencies
-RUN --mount=type=cache,target=/root/.cache/pip \
-  pip install --user -r requirements.txt
+RUN python -m venv /app/.venv && \
+    /app/.venv/bin/pip install --no-cache-dir -r requirements.txt
 
-# Final image, minimal runtime
+# Production stage - only runtime dependencies
 FROM base
 
-# Copy dependencies from builder
-COPY --from=builder /root/.local /root/.local
-
-# Copy source code
-COPY . /app
-
-# Set working directory
 WORKDIR /app
 
-# Make sure scripts in .local are usable
-ENV PATH=/root/.local/bin:$PATH
+# Copy built application from the builder stage
+COPY --from=builder /app/.venv /app/.venv
+COPY . /app
 
-# Launch Django app
-CMD ["python", "manage.py", "runserver", "0.0.0.0:$PORT"]
+ENV PATH="/app/.venv/bin:$PATH"
+
+# Start the app
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "django_app.wsgi:application"]
