@@ -1,5 +1,7 @@
 """FastAPI application with Suga client for image storage operations."""
 
+import os
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import PlainTextResponse
 
@@ -34,3 +36,10 @@ async def write_to_bucket(name: str, request: Request):
         return PlainTextResponse(f"File '{name}' written to bucket.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

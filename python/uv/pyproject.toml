@@ -9,8 +9,12 @@ dependencies = [
   "uvicorn",
   "grpcio>=1.74.0",
   "grpcio-tools>=1.74.0",
-  "suga-client==0.0.1rc3",
+  "suga-client==0.1.13",
 ]
+
+[tool.setuptools]
+packages = ["suga_gen"]
+py-modules = ["main"]
 
 [build-system]
 requires = ["setuptools>=40.8.0", "wheel", "pip"]
