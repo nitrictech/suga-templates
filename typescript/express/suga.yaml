@@ -1,6 +1,5 @@
 name: typescript-express
-targets:
-  - suga/aws@1
+target: suga/aws@1
 description: An example suga service
 services:
   app:
