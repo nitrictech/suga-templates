@@ -10,7 +10,7 @@ services:
     dev:
       script: npm run dev
 buckets:
-  image:
+  files:
     access:
       app:
         - all

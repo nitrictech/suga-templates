@@ -15,7 +15,7 @@ entrypoints:
       /:
         name: processor
 buckets:
-  image:
+  files:
     access:
       processor:
         - all

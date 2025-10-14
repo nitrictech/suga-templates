@@ -10,7 +10,7 @@ app.use(bodyParser.raw({ type: "*/*" }));
 app.get("/read/:name", async (req: Request, res: Response) => {
   try {
     const name = req.params.name;
-    const contents = await suga.image.read(name);
+    const contents = await suga.files.read(name);
     res.type("text/plain").send(contents.toString("utf-8"));
   } catch (e: any) {
     res.status(500).json({ detail: e.message || String(e) });
@@ -21,7 +21,7 @@ app.post("/write/:name", async (req: Request, res: Response) => {
   try {
     const name = req.params.name;
     const body = req.body;
-    await suga.image.write(name, body);
+    await suga.files.write(name, body);
     res.type("text/plain").send(`File '${name}' written to bucket.`);
   } catch (e: any) {
     res.status(500).json({ detail: e.message || String(e) });

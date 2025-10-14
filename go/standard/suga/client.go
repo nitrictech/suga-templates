@@ -15,7 +15,7 @@ import (
 
 // Client provides access to suga application resources
 type Client struct {
-	Image *suga.Bucket
+	Files *suga.Bucket
 }
 
 // NewClient creates a new set of all bucket clients
@@ -33,6 +33,6 @@ func NewClient() (*Client, error) {
 	storageClient := storagepb.NewStorageClient(cc)
 
 	return &Client{
-		Image: suga.NewBucket(storageClient, "image"),
+		Files: suga.NewBucket(storageClient, "files"),
 	}, nil
 }

@@ -34,7 +34,7 @@ func main() {
 	router.HandleFunc("GET /read/{name}", func(w http.ResponseWriter, r *http.Request) {
 		name := r.PathValue("name")
 
-		contents, err := app.Image.Read(name)
+		contents, err := app.Files.Read(name)
 		if err != nil {
 			writeJSONError(w, err)
 			return
@@ -55,7 +55,7 @@ func main() {
 		}
 		defer r.Body.Close()
 
-		err = app.Image.Write(name, body)
+		err = app.Files.Write(name, body)
 		if err != nil {
 			writeJSONError(w, err)
 			return

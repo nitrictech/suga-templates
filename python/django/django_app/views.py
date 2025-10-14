@@ -1,4 +1,4 @@
-"""Django views for image storage operations."""
+"""Django views for file storage operations."""
 
 import asyncio
 import traceback
@@ -19,9 +19,9 @@ def hello(request):
 
 @require_http_methods(["GET"])
 def read_from_bucket(request, name):
-    """Read image content from bucket by name."""
+    """Read file content from bucket by name."""
     try:
-        contents = suga.image.read(name)
+        contents = suga.files.read(name)
         return HttpResponse(contents.decode("utf-8"), content_type="text/plain")
     except Exception as e:
         return JsonResponse({"detail": str(e)}, status=500)
@@ -30,10 +30,10 @@ def read_from_bucket(request, name):
 @csrf_exempt
 @require_http_methods(["POST"])
 def write_to_bucket(request, name):
-    """Write image content to bucket by name."""
+    """Write file content to bucket by name."""
     try:
             body = request.body
-            suga.image.write(name, body)
+            suga.files.write(name, body)
             return HttpResponse(f"File '{name}' written to bucket.", content_type="text/plain")
 
     except Exception as e:

@@ -12,7 +12,7 @@ services:
     dev:
       script: go run main.go
 buckets:
-  image:
+  files:
     access:
       app:
         - all

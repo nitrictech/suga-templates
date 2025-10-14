@@ -1,4 +1,4 @@
-"""FastAPI application with Suga client for image storage operations."""
+"""FastAPI application with Suga client for file storage operations."""
 
 import os
 
@@ -19,9 +19,9 @@ async def hello():
 
 @app.get("/read/{name}")
 async def read_from_bucket(name: str):
-    """Read image content from bucket by name."""
+    """Read file content from bucket by name."""
     try:
-        contents = suga.image.read(name)
+        contents = suga.files.read(name)
         return PlainTextResponse(contents.decode("utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
@@ -29,10 +29,10 @@ async def read_from_bucket(name: str):
 
 @app.post("/write/{name}")
 async def write_to_bucket(name: str, request: Request):
-    """Write image content to bucket by name."""
+    """Write file content to bucket by name."""
     try:
         body = await request.body()
-        suga.image.write(name, body)
+        suga.files.write(name, body)
         return PlainTextResponse(f"File '{name}' written to bucket.")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
