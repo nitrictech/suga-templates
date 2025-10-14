@@ -10,7 +10,7 @@ services:
     dev:
       script: python manage.py runserver 0.0.0.0:$PORT
 buckets:
-  image:
+  files:
     access:
       processor:
         - all

@@ -19,7 +19,7 @@ class SugaClient:
         
         
         
-        self.image = Bucket(self._storage_client, "image")
+        self.files = Bucket(self._storage_client, "files")
         
 
     def close(self):
