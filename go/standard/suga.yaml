@@ -3,6 +3,7 @@ name: go-standard
 description: A Go web service template using the Suga framework for cloud resource access.
 services:
   app:
+    subtype: lambda
     env:
       TEST: test
     container:
@@ -13,11 +14,13 @@ services:
       script: go run main.go
 buckets:
   files:
+    subtype: s3
     access:
       app:
         - all
 entrypoints:
   ingress:
+    subtype: cloudfront
     routes:
       /:
         name: app

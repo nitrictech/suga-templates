@@ -2,7 +2,8 @@ name: python-fastapi-uv
 description: A FastAPI web service template using the Suga framework for cloud resource access.
 target: suga/aws@1
 services:
-  processor:
+  app:
+    subtype: lambda
     dev:
       script: uv run uvicorn main:app --host 0.0.0.0 --port $PORT
     container:
@@ -11,11 +12,13 @@ services:
         context: .
 entrypoints:
   ingress:
+    subtype: cloudfront
     routes:
       /:
-        name: processor
+        name: app
 buckets:
   files:
+    subtype: s3
     access:
-      processor:
+      app:
         - all

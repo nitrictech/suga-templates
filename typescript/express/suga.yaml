@@ -3,6 +3,7 @@ target: suga/aws@1
 description: An example suga service
 services:
   app:
+    subtype: lambda
     container:
       docker:
         dockerfile: Dockerfile
@@ -11,11 +12,13 @@ services:
       script: npm run dev
 buckets:
   files:
+    subtype: s3
     access:
       app:
         - all
 entrypoints:
   ingress:
+    subtype: cloudfront
     routes:
       /:
         name: app
