@@ -1,0 +1,25 @@
+target: suga/aws@1
+name: kotlin-ktor
+description: Test project in kotlin
+services:
+  backend_api:
+    subtype: lambda
+    container:
+      docker:
+        dockerfile: Dockerfile
+        context: .
+    dev:
+      script: cmd /c gradlew.bat run
+buckets:
+  image:
+    subtype: s3
+    access:
+      backend_api:
+        - read
+        - write
+entrypoints:
+  entrypoint:
+    subtype: cloudfront
+    routes:
+      /:
+        name: backend_api

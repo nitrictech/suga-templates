@@ -1,0 +1,25 @@
+target: suga/aws@1
+name: java-springboot
+description: Test project in java
+services:
+  backend_api:
+    subtype: lambda
+    container:
+      docker:
+        dockerfile: Dockerfile
+        context: .
+    dev:
+      script: mvn spring-boot:run
+buckets:
+  image:
+    subtype: s3
+    access:
+      backend_api:
+        - read
+        - write
+entrypoints:
+  entrypoint:
+    subtype: cloudfront
+    routes:
+      /:
+        name: backend_api
